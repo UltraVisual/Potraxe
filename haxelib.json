@@ -1,0 +1,10 @@
+{
+    "name": "potraxe",
+    "url": "https://github.com/UltraVisual/Potraxe",
+    "license": "GPL",
+    "tags": ["potraxe"],
+    "description": "Haxe port of potrace - http://potrace.sourceforge.net/",
+    "version": "0.1.0",
+    "releasenote": "Initial haxe 3 version",
+    "contributors": ["ultravisual"]
+}
