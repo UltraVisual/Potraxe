@@ -20,12 +20,6 @@ class Curve {
     public var alpha0:Float;
     public var beta:Float;
 
-    /**
-	 *  Constructor.
-	 *
-	 *  initialize the members of the given curve structure to size m.
-	 *  Return 0 on success, 1 on error with error set.
-	 */
 
     public function new():Void {
         c = new Array<Point>();

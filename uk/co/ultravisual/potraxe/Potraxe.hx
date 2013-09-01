@@ -17,26 +17,12 @@ import flash.geom.Point;
 import flash.text.TextField;
 import flash.text.TextFormat;
 
-/**
- *  The Potraxe class is an all-static class with methods for working with tracing <code>BitmapData</code> and letters.
- */
 class Potraxe {
-    /**
-	 *  Traces the given BitmapData.
-	 *
-	 *  @param sourceBitmapData The input image to use. The source image must be binarized 
-	 *  (only 0xffffffff and 0xff000000 are allowed).
-	 *  @return A ClosedPathList object that represents trace result.
-	 *  @see also ClosedPathList
-	 */
+
     public static function traceBitmap(sourceBitmapData:BitmapData):ClosedPathList {
         var pathList:Array<Dynamic> = PathList.create(sourceBitmapData);
         return ProcessPath.processPath(pathList);
     }
-
-    /**
-	 *  Traces the String with fontsize <code>fontSize</code>.
-	 */
 
     public static function traceLetter(letter:String, fontSize:Int, fontName:String):ClosedPathList {
         var tf:TextFormat = new TextFormat();

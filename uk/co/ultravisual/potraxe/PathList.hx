@@ -18,12 +18,7 @@ import flash.geom.Matrix;
 import flash.filters.ColorMatrixFilter;
 
 class PathList {
-/**
-		 * Decompose the given bitmap Into paths.
-		 *
-		 * @param bitmapData BitmapData to create paths.
-		 * @return paths.
-		 */
+
     public static function create(bitmapData:BitmapData):Array<Dynamic> {
         var pathList:Array<Dynamic> = [];
         var y:Int = 0;
@@ -61,13 +56,6 @@ class PathList {
         return pathList;
     }
 
-/**
-		 * find the next set pixel in a row <= y.
-		 *
-		 * <p>Pixels are searched first left-to-right, then top-down.</p>
-		 *
-		 * <p>If found, return Point object. Else return null.</p>
-		 */
 
     private static function findNext(bmd:BitmapData, pt:Point):Bool {
 
@@ -82,18 +70,6 @@ class PathList {
         }
         return false;
     }
-
-        /**
-		 * compute a path in the given pixmap, separating black from white.
-		 *
-		 * <p>Start path at the <code>startPoint</code>, which must be an upper
-		 * left corner of the path.
-		 * Also compute the area enclosed by the path. Return a
-		 * new path object. (note that a legitimate path
-		 * cannot have length 0).</p>
-		 *
-		 * @param sign Required for correct Interpretation of turn policies.
-		 */
 
     private static function findPath(bmd:BitmapData, startPoint:Point, sign:String, turnpolicy:Int):Dynamic {
         var area:Int = 0;
@@ -143,10 +119,6 @@ class PathList {
         return path;
     }
 
-/**
-		 *  xor the given pixmap with the Interior of the given path. 
-		 *  Note: the path must be within the dimensions of the pixmap.
-		 */
 
     private static function xorPath(bm:BitmapData, p:Dynamic, filter:ColorMatrixFilter):Void {
         var priv:Array<Dynamic> = cast p.priv;

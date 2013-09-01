@@ -17,12 +17,6 @@ class ClosedPath {
 
     public var curveArray:Array<Curve>;
 
-    /**
-	 *  Constructor.
-	 *
-	 *  initialize the members of the given curve structure to size m.
-	 *  Return 0 on success, 1 on error with error set.
-	 */
 
     public function new(?array:Array<Curve> = null):Void {
         curveArray = array != null ? array : [];

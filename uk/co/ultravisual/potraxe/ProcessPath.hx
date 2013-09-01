@@ -40,12 +40,6 @@ class ProcessPath {
         return curveList;
     }
 
-/**
-		 * Preparation: fill in the sum* fields of a path (used for later
-		 * rapid summing). Return 0 on success, 1 with errno set on
-		 * failure.
-		 */
-
     public static function calcSums(pt:Array<Point>):Array<Sums> {
         var n:Int = pt.length;
 
@@ -70,13 +64,6 @@ class ProcessPath {
 
         return sums;
     }
-
-/**
-		 * Stage 1: determine the straight subpaths (Sec. 2.2.1). Fill in the
-		 * "lon" component of a path object (based on pt/len).        For each i,
-		 * lon[i] is the furthest index such that a straight line can be drawn
-		 * from i to lon[i]. Return 1 on error with errno set, else 0.
-		 */
 
     public static function calcLon(pt:Array<Point>):Array<Int> {
         var lon:Array<Int> = [];
@@ -199,14 +186,6 @@ class ProcessPath {
         return lon;
     }
 
-/**
-		 * Stage 2: calculate the optimal polygon (Sec. 2.2.2-2.2.4).
-		 *
-		 * find the optimal polygon. Fill in the m and po components. Return 1
-		 * on failure with errno set, else 0. Non-cyclic version: assumes i=0
-		 * is in the polygon.
-		 */
-
     public static function bestPolygon(pt:Array<Point>, lon:Array<Int>, sums:Array<Sums>):Array<Int> {
         var i:Int, j:Int, k:Int;
         var n:Int = pt.length;
@@ -296,11 +275,6 @@ class ProcessPath {
         return po;
     }
 
-/**
-		 * Auxiliary function: calculate the penalty of an edge from i to j in
-		 * the given path. This needs the "lon" and "sum*" data.
-		 */
-
     private static function penalty3(pt:Array<Point>, i:Int, j:Int, sums:Array<Sums>):Float {
         var n:Int = pt.length;
         var r:Int = 0;
@@ -330,15 +304,6 @@ class ProcessPath {
 
         return Math.sqrt(s);
     }
-
-/**
-		/* Stage 3: vertex adjustment (Sec. 2.3.1).
-		 *
-		 * Adjust vertices of optimal polygon: calculate the Intersection of
-		 * the two "optimal" line segments, then move it Into the unit square
-		 * if it lies outside. Return 1 with errno set on error; 0 on
-		 * success.
-		 */
 
     public static function adjustVertices(pt:Array<Point>, sums:Array<Sums>, po:Array<Int>):Array<Point> {
         var m:Int = po.length;
@@ -473,12 +438,6 @@ class ProcessPath {
         return vertex;
     }
 
-/**
-		 *  Stage 4: smoothing and corner analysis (Sec. 2.3.3)
-		 *
-		 *  Always succeeds and returns 0
-		 */
-
     public static function smooth(vertex:Array<Dynamic>, sign:String, alphamax:Float = 1.0):ClosedPath {
         var m:Int = vertex.length;
         var closedPath:ClosedPath = new ClosedPath();
@@ -551,11 +510,6 @@ class ProcessPath {
         return closedPath;
     }
 
-/**
-		 *  determine the center and slope of the line i..j. Assume i<j. Needs
-		 *	"sum" components of p to be set.
-		 */
-
     public static function pointslope(pt:Array<Point>, sums:Array<Sums>, i:Int, j:Int, ctr:Point, dir:Point):Void {
         var n:Int = pt.length;
 
@@ -619,24 +573,10 @@ class ProcessPath {
         }
     }
 
-/**
-		 *  range over the straight line segment [a,b] when lambda ranges over [0,1]
-		 */
-
     public static function Interval(lambda:Float, a:Point, b:Point, ret:Point):Void {
         ret.x = a.x + lambda * (b.x - a.x);
         ret.y = a.y + lambda * (b.y - a.y);
     }
-
-/**
-		 *  some useful macros. Note: the "mod" macro works correctly for
-		 *  negative a. Also note that the test for a>=n, while redundant,
-		 *  speeds up the mod function by 70% in the average case (significant
-		 *  since the program spends about 16% of its time here - or 40%
-		 *  without the test). The "floordiv" macro returns the largest Integer
-		 *  <= a/n, and again this works correctly for negative a, as long as
-		 *  a,n are Integers and n>0.
-		 */
 
     private static function mod(a:Int, n:Int):Int {
         return a >= n ? a % n : a >= 0 ? a : n - 1 - ( -1 - a) % n;
@@ -650,26 +590,13 @@ class ProcessPath {
         return Math.round(a * Math.pow(10, prec)) / Math.pow(10, prec);
     }
 
-/**
-		 *  calculate p1 x p2
-		 */
-
     private static function xprod(p1:Point, p2:Point):Int {
         return Std.int(p1.x * p2.y - p1.y * p2.x);
     }
 
-/**
-		 *  sign
-		 */
-
     private static function sign(x:Float):Int {
         return (x > 0 ? 1 : x < 0 ? -1 : 0);
     }
-
-/**
-		 *  return a direction that is 90 degrees counterclockwise from p2-p0,
-		 *  but then restricted to one of the major wind directions (n, nw, w, etc)
-		 */
 
     public static function dorth_infty(p0:Point, p2:Point):Point {
         return new Point(
@@ -677,10 +604,6 @@ class ProcessPath {
         -sign(p2.y - p0.y)
         );
     }
-
-/**
-		 *  return (p1-p0)x(p2-p0), the area of the parallelogram
-		 */
 
     static public function dpara(p0:Point, p1:Point, p2:Point):Float {
         var x1:Float = p1.x - p0.x;
@@ -691,19 +614,10 @@ class ProcessPath {
         return x1 * y2 - x2 * y1;
     }
 
-/**
-		 *  ddenom/dpara have the property that the square of radius 1 centered
-		 *  at p1 Intersects the line p0p2 iff |dpara(p0,p1,p2)| <= ddenom(p0,p2)
-		 */
-
     public static function ddenom(p0:Point, p2:Point):Float {
         var r:Point = dorth_infty(p0, p2);
         return r.y * (p2.x - p0.x) - r.x * (p2.y - p0.y);
     }
-
-/**
-		 *  return 1 if a <= b < c < a, in a cyclic sense (mod n)
-		 */
 
     private static function cyclic(a:Int, b:Int, c:Int):Bool {
         if (a <= c) {
