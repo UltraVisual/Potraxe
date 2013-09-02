@@ -7,7 +7,6 @@ Install via haxelib with
 
 ```
 haxelib git https://github.com/UltraVisual/Potraxe
-
 ```
 Basic trace text example - note the huge font size - this is for better precision as smaller font sizes look
 less precise in the final drawing but larger ones take up more computation times.
