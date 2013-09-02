@@ -12,7 +12,7 @@ haxelib git https://github.com/UltraVisual/Potraxe
 Basic trace text example - note the huge font size - this is for better precision as smaller font sizes look
 less precise in the final drawing but larger ones take up more computation times.
 
-![Text tracing](https://github.com/UltraVisual/Potraxe/raw/master/src/common/Assets/potraxe.png "Text tracing")
+![Text tracing](https://github.com/UltraVisual/Potraxe/raw/master/src/common/images/potraxe.png "Text tracing")
 
 ```
 package ;
@@ -50,7 +50,7 @@ class TextSample extends Sprite {
 
 ```
 
-![Bitmap tracing](https://github.com/UltraVisual/Potraxe/raw/master/src/common/Assets/manga.png "Bitmap tracing")
+![Bitmap tracing](https://github.com/UltraVisual/Potraxe/raw/master/src/common/images/manga.png "Bitmap tracing")
 
 Basic trace bitmap example
 
